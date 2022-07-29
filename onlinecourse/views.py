@@ -148,7 +148,7 @@ def show_exam_result(request, course_id, submission_id):
     course = Course.objects.get(id = course_id)
     total_points = 5*course.question_set.count()
     submission = Submission.objects.get(id = submission_id)
-    grade = 15
+    grade = 0
     for question in course.question_set.all():
         for choice in question.choice_set.all():
             if choice.is_correct:
@@ -159,6 +159,8 @@ def show_exam_result(request, course_id, submission_id):
             grade += choice.question.grade
     
     grade = int((grade/total_points)*100)
+    if grade<0:
+        grade = 0
     context = {'course':course,'submission':submission,'grade':grade}   
     return render(request, 'onlinecourse/exam_result_bootstrap.html', context)
    
