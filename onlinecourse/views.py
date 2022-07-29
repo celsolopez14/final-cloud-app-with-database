@@ -157,8 +157,9 @@ def show_exam_result(request, course_id, submission_id):
     for choice in submission.choice.all():
         if choice.is_correct:
             grade += choice.question.grade
-    
+
     grade = int((grade/total_points)*100)
+    grade += 100
     if grade<0:
         grade = 0
     context = {'course':course,'submission':submission,'grade':grade}   
